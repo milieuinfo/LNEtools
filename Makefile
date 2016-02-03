@@ -37,14 +37,14 @@ LOCALES =
 
 # translation
 SOURCES = \
-	__init__.py \
-	LNEtools.py LNEtools_algorithm.py LNEtools_provider.py
+	__init__.py LNEtools_BlootstellingZiekenhuis.py \
+	LNEtools.py LNEtools_bufferELFbronnen.py LNEtools_provider.py
 
 PLUGINNAME = LNEtools
 
 PY_FILES = \
-	__init__.py \
-	LNEtools.py LNEtools_algorithm.py LNEtools_provider.py
+	__init__.py  LNEtools_BlootstellingZiekenhuis.py \
+	LNEtools.py LNEtools_bufferELFbronnen.py LNEtools_provider.py
 
 EXTRAS = metadata.txt pics algoritmHelper
 

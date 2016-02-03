@@ -2,3 +2,4 @@
 from _geomConstruct import *
 from _geomMath import  *
 from _analyses import *
+from _summaryTools import *

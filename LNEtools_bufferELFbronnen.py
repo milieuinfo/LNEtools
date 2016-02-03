@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from PyQt4.QtGui import QIcon, QPixmap
 from processing.core.GeoAlgorithm import GeoAlgorithm
 from processing.core.outputs import OutputVector
 from processing.core.parameters import *
@@ -7,46 +7,46 @@ from processing.core.parameters import *
 from algoritmHelper import *
 from algoritmHelper.simpleHelpers import findOGRtype
 
-class LNEtoolsAlgorithm(GeoAlgorithm):
+class LNEtools_bufferELFbronnen(GeoAlgorithm):
+    """Buffers rond ELF-bronnen"""
     # Constants used to refer to parameters and outputs. They will be
     # used when calling the algorithm from another algorithm, or when
     # calling from the QGIS console.
-
     INPUT_LAYERS = 'INPUT_LAYER'
     HOOGTE_BRON = 'HOOGTE_BRON'
     HOOGTE_VRIJ = 'HOOGTE_VRIJ'
     STERKTE = 'STERKTE'
     BELASTING = 'BELASTING'
     HOOGTE_NUM = 'HOOGTE_NUM'
-
     OUTPUT_LAYER = 'OUTPUT_LAYER'
+
+    def getIcon(self):
+        curdir = os.path.dirname(__file__)
+        icoFile = os.path.join( curdir, 'pics', 'Script.png' )
+        icon = QIcon( QPixmap( icoFile))
+        return icon
+
+    def help(self):
+        return False, 'http://www.milieuinfo.be/'
 
     def defineCharacteristics(self):
         """Here we define the inputs and output of the algorithm, along with some other properties."""
-
         # The name that the user will see in the toolbox
-        self.name = 'Buffers rond ELF-bronnen'
+        self.name = '_Buffers rond ELF-bronnen'
+        self.group = 'ELF'
 
-        # The branch of the toolbox under which the algorithm will appear
-        self.group = 'LNE_ELF'
-
-        # We add the input vector layer. It can have any kind of geometry
-        # It is a mandatory (not optional) one, hence the False argument
         self.addParameter(
-                ParameterMultipleInput(self.INPUT_LAYERS, "ELF-Bronnen", ParameterMultipleInput.TYPE_VECTOR_ANY, False) )
+                ParameterMultipleInput(self.INPUT_LAYERS, u"ELF-Bronnen", ParameterMultipleInput.TYPE_VECTOR_ANY, False) )
         self.addParameter(
-                ParameterBoolean(self.HOOGTE_BRON, "hoogte_bron", False) )
+                ParameterBoolean(self.HOOGTE_BRON, u"hoogte_bron", False) )
         self.addParameter(
-                ParameterNumber(self.HOOGTE_VRIJ, "hoogte_vrij", 0, 4000 , False) )
+                ParameterNumber(self.HOOGTE_VRIJ, u"hoogte_vrij (m)", 0, 10000 , 0) )
         self.addParameter(
-                ParameterNumber(self.STERKTE, "sterkte", 0, 10000000000, False) )
+                ParameterNumber(self.STERKTE, u"sterkte (µT)", 0, 1000000, 0.4) )
         self.addParameter(
-                ParameterNumber(self.BELASTING, "belasting", 0, 10000000000 , False) )
-        #self.addParameter( ParameterNumber( self.HOOGTE_NUM, "Hoogte in meter", 0, 4000 , False))
-
-
+                ParameterNumber(self.BELASTING, u"belasting (%)", 0, 100000 , 25 ) )
         # We add a vector layer as output
-        self.addOutput(OutputVector(self.OUTPUT_LAYER, "Output"))
+        self.addOutput(OutputVector(self.OUTPUT_LAYER, u"Output"))
 
     def processAlgorithm(self, progress):
         inputFilenames = self.getParameterValue(self.INPUT_LAYERS).split(';')
@@ -110,4 +110,3 @@ class LNEtoolsAlgorithm(GeoAlgorithm):
            raise Exception("Could not  write to " + output + " added memory instead ")
         else:
             del isolijnen
-
