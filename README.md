@@ -13,8 +13,8 @@ Ontwikkeld voor het department Leefmilieu en Energie (LNE).
 Deze tool vereist minimaal QGIS versie 2.12.
 
 Inhoud:
-	- Rekenmodel voor elektromagnetische straling (ELF): 
-	    - [_Buffers rond ELF-bronnen](LNEtools_bufferELFbronnen.md)
+- Rekenmodel voor elektromagnetische straling (ELF): 
+	- [_Buffers rond ELF-bronnen](LNEtools_bufferELFbronnen.md)
 
 Installatie
 -----
