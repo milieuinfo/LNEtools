@@ -7,7 +7,7 @@ As this tool is only relevant to Flemish government agencies, the rest of this f
 De LNE-toolbox voor het QGIS processing framework
 ======
 
-Verschillende arcgis geoprocessing script geport naar een provider voor het QGIS processing framework.
+Dit zijn verschillende arcgis geoprocessing script geport naar een provider voor het QGIS processing framework.
 Ontwikkeld voor het department Leefmilieu en Energie (LNE).
 
 Deze tool vereist minimaal QGIS versie 2.12.
@@ -21,7 +21,7 @@ Installatie
 Open de plugins dialoog via het menu: *Plugins > Plugins Beheren en Installeren ...*
  
 De LNE-plugin blibiotheek moet zijn toevoegd. Dit kan via het tabblad 'Extra' in de plugins-dialoog.
-Hier je de extra zoeklocatie van LNE toevoegen: https://www.mercator.vlaanderen.be/qgis-plugins/plugins/plugins.xml
+Hier kan je de extra zoeklocatie van LNE toevoegen: https://www.mercator.vlaanderen.be/qgis-plugins/plugins/plugins.xml
 ![](pics/repo.png)
 
 Als dat het geval is kan je zoek op 'LNE' of  'processing'
