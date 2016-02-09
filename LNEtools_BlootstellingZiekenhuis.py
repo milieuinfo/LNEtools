@@ -52,21 +52,19 @@ class LNEtools_BlootstellingZiekenhuis(GeoAlgorithm):
         verdieping = VerdiepingUitBlootstellingsHoogte(inputBuffersLayer)
 
         if verdieping > 0:
-            # arcpy.Select_analysis(inputZiekenhuis, "in_memory/gebouwen", "\"aant_verd\" >= " + str(verdieping))
-            #
-            # selectie_gebouwen = arcpy.SelectLayerByLocation_management(gebouw_lyr, "INTERSECT", inputBuffers, "", "NEW_SELECTION")
-            #
-            # aantal = int(arcpy.GetCount_management(selectie_gebouwen).getOutput(0))
-            # if aantal == 0:
-            #     arcpy.AddMessage("Er liggen geen gebouwen binnen de opgegeven buffers!")
-            # if berekeningswijze == "Maximum telling":
-            #     MaximumTelling(selectie_gebouwen, outputTable, outputFeatures)
-            # elif berekeningswijze == "Minimum telling":
-            #     MinimumTelling(selectie_gebouwen, inputBuffers, outputTable, outputFeatures)
-            # elif berekeningswijze == "Tussenvorm":
-            #     TussenTelling(selectie_gebouwen, outputTable, outputFeatures)
+            selected = runalg("qgis:selectbylocation", inputZiekenhuislayer, inputBuffersLayer, [u"intersects"] , 0, 0 )['OUTPUT']
+            # selectie_gebouwen =  dataobjects.getObjectFromUri(selected)
+            selectedCount =  inputZiekenhuislayer.selectedFeatureCount()	
+            print selected +" >aantal> "+ str(selectedCount)
+            if selectedCount == 0:
+               print("Er liggen geen gebouwen binnen de opgegeven buffers!")
+            if berekeningswijze == "Maximum telling":
+                MaximumTelling(inputZiekenhuislayer, outputTable, outputFeature)
+            elif berekeningswijze == "Minimum telling":
+                MinimumTelling(inputZiekenhuislayer, inputBuffers, outputTable, outputFeature)
+            elif berekeningswijze == "Tussenvorm":
+                TussenTelling(inputZiekenhuislayer, outputTable, outputFeature)
 
-            selected = runalg("qgis:selectbylocation", inputZiekenhuis, inputBuffers, [u"intersects"] , 0 )['OUTPUT']
 
         elif verdieping == 0:
             raise Exception("Het bufferbestand is leeg, er kan geen blootstellingshoogte bepaald worden.")

@@ -9,9 +9,6 @@ from algoritmHelper.simpleHelpers import findOGRtype
 
 class LNEtools_bufferELFbronnen(GeoAlgorithm):
     """Buffers rond ELF-bronnen"""
-    # Constants used to refer to parameters and outputs. They will be
-    # used when calling the algorithm from another algorithm, or when
-    # calling from the QGIS console.
     INPUT_LAYERS = 'INPUT_LAYER'
     HOOGTE_BRON = 'HOOGTE_BRON'
     HOOGTE_VRIJ = 'HOOGTE_VRIJ'
@@ -27,30 +24,28 @@ class LNEtools_bufferELFbronnen(GeoAlgorithm):
         return icon
 
     def help(self):
-        return False, 'http://www.milieuinfo.be/'
+        return False, 'https://github.com/milieuinfo/LNEtools/blob/master/LNEtools_bufferELFbronnen.md'
 
     def defineCharacteristics(self):
         """Here we define the inputs and output of the algorithm, along with some other properties."""
         # The name that the user will see in the toolbox
         self.name = '_Buffers rond ELF-bronnen'
-        self.group = 'ELF'
-
-        self.addParameter(
-                ParameterMultipleInput(self.INPUT_LAYERS, u"ELF-Bronnen", ParameterMultipleInput.TYPE_VECTOR_ANY, False) )
-        self.addParameter(
-                ParameterBoolean(self.HOOGTE_BRON, u"hoogte_bron", False) )
-        self.addParameter(
-                ParameterNumber(self.HOOGTE_VRIJ, u"hoogte_vrij (m)", 0, 10000 , 0) )
-        self.addParameter(
-                ParameterNumber(self.STERKTE, u"sterkte (µT)", 0, 1000000, 0.4) )
-        self.addParameter(
-                ParameterNumber(self.BELASTING, u"belasting (%)", 0, 100000 , 25 ) )
+        self.group = 'Rekenmodel voor elektromagnetische straling (ELF)'
+        #input paramters
+        self.addParameter( ParameterMultipleInput(self.INPUT_LAYERS, u"ELF-Bronnen",
+                                                  ParameterMultipleInput.TYPE_VECTOR_ANY, False) )
+        self.addParameter( ParameterBoolean(self.HOOGTE_BRON, u"Op bron hoogte", False) )
+        self.addParameter( ParameterNumber(self.HOOGTE_VRIJ, u"Hoogte (m)", 0, 10000 , 0) )
+        self.addParameter( ParameterSelection(self.STERKTE, u"sterkte (µT)",
+                            options=["0.1","0.2","0.3","0.4","0.6","0.8","1","2","10","20","25","30"], default=3 ) )
+        self.addParameter( ParameterSelection(self.BELASTING, u"belasting (%)",
+                            options=[str(n) for n in range(1,101)] , default=24 ) )
         # We add a vector layer as output
         self.addOutput(OutputVector(self.OUTPUT_LAYER, u"Output"))
 
     def processAlgorithm(self, progress):
         inputFilenames = self.getParameterValue(self.INPUT_LAYERS).split(';')
-        hoogte_bron = True if self.getParameterValue(self.HOOGTE_BRON) == "True" else False
+        hoogte_bron =  self.getParameterValue(self.HOOGTE_BRON)
         hoogte_vrij = float( self.getParameterValue(self.HOOGTE_VRIJ) )
         sterkte = float( self.getParameterValue(self.STERKTE) )
         belasting = float( self.getParameterValue(self.BELASTING) )
@@ -97,7 +92,7 @@ class LNEtools_bufferELFbronnen(GeoAlgorithm):
                 BufferTransformatieposten(hoogte_bron, hoogte_vrij, sterkte, vectorLayer,  isolijnen)
                 print "is berekend"
             else:
-                print "Type '"  + type_bron + "' van ELF-bron '" + inputFilename + "'is onbekend. Buffers zijn niet berekend."
+                print "Type '"+ type_bron +"' van ELF-bron '"+ inputFilename +"'is onbekend. Buffers zijn niet berekend."
 
         #finish
         flType = findOGRtype(output)

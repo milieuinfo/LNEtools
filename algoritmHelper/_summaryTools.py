@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from qgis.core import QgsVectorFileWriter, QgsFeatureRequest, QgsExpression
 from simpleHelpers import findOGRtype
-from processing import runalg
 
 def VerdiepingUitBlootstellingsHoogte(buffers):
     verdieping = 0
@@ -16,21 +15,22 @@ def VerdiepingUitBlootstellingsHoogte(buffers):
 def MaakOverzichtstabel(selectie, statistics_fields, outputTable):
     gemeenteField = selectie.fieldNameIndex("Gemeente")
     gemeentes = selectie.uniqueValues(gemeenteField)
-    outString = ";".join(statistics_fields) + ";Gemeente" + "\n"
+    outString = ";".join(statistics_fields) + ";Gemeente" + "\r\n"
 
     for field in statistics_fields:
-        sumVals = sum( selectie.getDoubleValues(field, False)[0] )
+        sumVals = sum( selectie.getDoubleValues(field, True)[0] )
         outString += str( sumVals ) +";"
-    outString += ";total\n"
+    outString += ";total\r\n"
 
     for gemeente in gemeentes:
         expression = QgsExpression("Gemeente = '{}'".format(gemeente) )
         qry = QgsFeatureRequest( expression )
+        selFeatids = selectie.selectedFeaturesIds()
         feats = selectie.getFeatures( qry )
         for field in statistics_fields:
-            sumVals = sum([feat[field] for feat in feats ])
+            sumVals = sum([ feat[field] for feat in feats if feat.id() in selFeatids ])
             outString += str( sumVals ) +";"
-        outString += ";"+ gemeente +"\n"
+        outString += ";"+ gemeente +"\r\n"
 
     fl = open( outputTable, 'w' )
     fl.write(outString)
@@ -42,9 +42,10 @@ def MaximumTelling(selectie_gebouwen, outputTable, outputFeatures):
         MaakOverzichtstabel(selectie_gebouwen, statistics_fields , outputTable)
     if outputFeatures:
         flType = findOGRtype(outputFeatures)
-        QgsVectorFileWriter.writeAsVectorFormat( selectie_gebouwen , outputFeatures, "utf-8", None, flType )
+        QgsVectorFileWriter.writeAsVectorFormat(selectie_gebouwen, outputFeatures, "utf-8", None, flType, True )
 
 def MinimumTelling(selectie_gebouwen, inputBuffers, outputTable, outputFeatures):
+    ##TODO
     # buffer_lyr = arcpy.MakeFeatureLayer_management(inputBuffers, "buffer_lyr")
     # selectie_buffers = arcpy.SelectLayerByLocation_management(buffer_lyr, "INTERSECT", selectie_gebouwen, "", "NEW_SELECTION")
     # arcpy.Dissolve_management(selectie_buffers, "in_memory/disbuf", "", "", "SINGLE_PART", "DISSOLVE_LINES")

@@ -2,7 +2,6 @@
 from PyQt4.QtGui import QIcon, QPixmap
 from processing.core.AlgorithmProvider import AlgorithmProvider
 from LNEtools_bufferELFbronnen import LNEtools_bufferELFbronnen
-from LNEtools_BlootstellingZiekenhuis import LNEtools_BlootstellingZiekenhuis
 import os
 
 class LNEtoolsProvider(AlgorithmProvider):
@@ -13,7 +12,7 @@ class LNEtoolsProvider(AlgorithmProvider):
         self.activate = True
 
         # Load algorithms
-        self.alglist = [LNEtools_bufferELFbronnen(), LNEtools_BlootstellingZiekenhuis()]
+        self.alglist = [LNEtools_bufferELFbronnen() ]
         for alg in self.alglist:
             alg.provider = self
 
