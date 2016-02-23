@@ -16,18 +16,27 @@ Inhoud:
 - Rekenmodel voor elektromagnetische straling (ELF): 
 	- [_Buffers rond ELF-bronnen](LNEtools_bufferELFbronnen.md)
 
-Installatie
+Installatie voor ontwikkelaars
+----
+In de root folder van deze repo, open de console en type:
+    
+    make deploy
+
+Installatie voor gebruikers
 -----
 Open de plugins dialoog via het menu: *Plugins > Plugins Beheren en Installeren ...*
  
 De LNE-plugin blibiotheek moet zijn toevoegd. Dit kan via het tabblad 'Extra' in de plugins-dialoog.
 Hier kan je de extra zoeklocatie van LNE toevoegen: https://www.mercator.vlaanderen.be/qgis-plugins/plugins/plugins.xml
+
 ![](pics/repo.png)
 
 Als dat het geval is kan je zoek op 'LNE' of  'processing'
 Download en activeer zowel 'processing' als 'Processing Tools voor LNE'.
+
 ![](pics/plugin_dialog.png)
 
 Open de processing dialoog en activeer de "Geavanceerde weergave" om de toolbox gemakkelijk terug te vinden.
+
 ![](pics/Geavanceerde_weergave.png)
 

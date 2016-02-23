@@ -40,7 +40,7 @@ SOURCES = \
 	__init__.py LNEtools_BlootstellingZiekenhuis.py \
 	LNEtools.py LNEtools_bufferELFbronnen.py LNEtools_provider.py
 
-PLUGINNAME = LNEtools
+PLUGINNAME = Processing_Tools_voor_LNE
 
 PY_FILES = \
 	__init__.py  LNEtools_BlootstellingZiekenhuis.py \

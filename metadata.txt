@@ -2,7 +2,7 @@
 # This file should be included when you package your plugin.
 
 [general]
-name=Processing Tools voor LNE
+name=Processing_Tools_voor_LNE
 qgisMinimumVersion=2.12
 description=Reeks QGIS processing tools voor LNE
 version=0.1

@@ -3,7 +3,7 @@ from PyQt4.QtGui import QIcon, QPixmap
 from processing.core.GeoAlgorithm import GeoAlgorithm
 from processing.core.outputs import OutputVector
 from processing.core.parameters import *
-
+from processing.core import GeoAlgorithmExecutionException
 from algoritmHelper import *
 from algoritmHelper.simpleHelpers import findOGRtype
 
@@ -100,8 +100,7 @@ class LNEtools_bufferELFbronnen(GeoAlgorithm):
         error = QgsVectorFileWriter.writeAsVectorFormat( isolijnen , output, "utf-8", None, flType )
 
         if error != QgsVectorFileWriter.NoError:
-           print error
            QgsMapLayerRegistry.instance().addMapLayer(isolijnen)
-           raise Exception("Could not  write to " + output + " added memory instead ")
+           raise GeoAlgorithmExecutionException("Could not  write to " + output + " added memory instead ")
         else:
             del isolijnen

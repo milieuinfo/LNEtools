@@ -12,13 +12,12 @@ class LNEtoolsProvider(AlgorithmProvider):
         self.activate = True
 
         # Load algorithms
-        self.alglist = [LNEtools_bufferELFbronnen() ]
+        self.alglist = [LNEtools_bufferELFbronnen(),  ]
         for alg in self.alglist:
             alg.provider = self
 
     def initializeSettings(self):
-        """In this method we add settings needed to configure our
-        provider.
+        """In this method we add settings needed to configure our provider.
         Do not forget to call the parent method, since it takes care
         or automatically adding a setting for activating or
         deactivating the algorithms in the provider. """
